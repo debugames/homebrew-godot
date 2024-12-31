@@ -1,7 +1,7 @@
-# DebuGames' Homebrew-Tap
+# HomeBrew's Tap for all versions of godot
 
 ```shell
-brew tap debugames/debugames
+brew tap debugames/godot
 
 # e.g.,
 brew install godot@4.2.2
