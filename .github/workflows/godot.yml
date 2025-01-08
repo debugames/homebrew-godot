@@ -1,38 +1,38 @@
-name: Generate Godot's Casks
-on: 
-  workflow_dispatch:
-    inputs:
-      force:
-        description: 'Force to run the workflow'
-        required: false
-        type: boolean
-        default: false
-  # 毎日 0:00 に実行
-  schedule:
-    - cron: '0 0 * * *'
-jobs:
-  generate_casks:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: write
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Run script
-        run: |
-          force_flag=""
-          [ "${{ github.event.inputs.force }}" = "true" ] && force_flag="-f"
-          ./.github/scripts/generate-godot-casks.sh Casks $force_flag
-        env:
-            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Commit
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add -A
-          git diff-index --quiet HEAD || git commit -m "Update Godot's Casks by GitHub Action"
-      - name: Push
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+# name: Generate Godot's Casks
+# on: 
+#   workflow_dispatch:
+#     inputs:
+#       force:
+#         description: 'Force to run the workflow'
+#         required: false
+#         type: boolean
+#         default: false
+#   # 毎日 0:00 に実行
+#   schedule:
+#     - cron: '0 0 * * *'
+# jobs:
+#   generate_casks:
+#     runs-on: ubuntu-latest
+#     permissions:
+#       contents: write
+#       pull-requests: write
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4
+#       - name: Run script
+#         run: |
+#           force_flag=""
+#           [ "${{ github.event.inputs.force }}" = "true" ] && force_flag="-f"
+#           ./.github/scripts/generate-godot-casks.sh Casks $force_flag
+#         env:
+#             GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#       - name: Commit
+#         run: |
+#           git config --local user.email "action@github.com"
+#           git config --local user.name "GitHub Action"
+#           git add -A
+#           git diff-index --quiet HEAD || git commit -m "Update Godot's Casks by GitHub Action"
+#       - name: Push
+#         uses: ad-m/github-push-action@master
+#         with:
+#           github_token: ${{ secrets.GITHUB_TOKEN }}
